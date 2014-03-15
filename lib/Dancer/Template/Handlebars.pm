@@ -159,3 +159,13 @@ sub render {
 }
 
 1;
+
+__END__
+
+=head1 SEE ALSO
+
+=over
+
+=item L<Dancer::Template::Mustache> - similar Dancer wrapper for L<Template::Mustache>.
+
+=back

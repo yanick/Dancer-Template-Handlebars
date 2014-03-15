@@ -61,6 +61,19 @@ passed via C<helper_modules> in the configuration. See
 L<Dancer::Template::Handlebars::Helpers> for more details on how to register
 the functions themselves.
 
+=head2 Layouts
+
+Layouts are supported. The content of the inner template will
+be available via the 'content' variable. 
+
+Example of a perfectly valid, if slightly boring, layout:
+
+    <html>
+    <body>
+        {{ content }}
+    </body>
+    </html>
+
 
 =cut
 
@@ -137,6 +150,24 @@ sub view {
 
     # No matching view path was found
     return;
+}
+
+sub layout {
+    my ($self, $layout, $tokens, $content) = @_;
+
+    my $dir = Dancer::App->current->setting('views');
+    my( $layout_name ) = grep { -e join '/', $dir, $_ }
+                          map { 'layouts/'.$_ } $self->_template_name($layout);
+
+    my $full_content;
+    if (-e join '/', $dir, $layout_name ) {
+        $full_content = Dancer::Template->engine->render(
+                                     $layout_name, {%$tokens, content => $content});
+    } else {
+        $full_content = $content;
+        Dancer::Logger::error("Defined layout ($layout) was not found!");
+    }
+    $full_content;
 }
 
 sub view_exists { 

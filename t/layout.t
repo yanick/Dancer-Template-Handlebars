@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 4;
+use Test::More tests => 1;
 
 {
     package MyApp;
@@ -37,5 +37,5 @@ use Test::More tests => 4;
 
 use Dancer::Test appdir => 't';
 
-response_content_like '/' => qr/!!! \s+ hello there, world \s+ !!!/xi, 'basic layout';
+response_content_like '/' => qr/!!! \s+ hello \s there, \s world \s+ !!!/xi, 'basic layout';
 

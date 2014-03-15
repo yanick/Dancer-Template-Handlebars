@@ -1,7 +1,0 @@
-^dist.ini
-^MANIFEST.SKIP
-Dancer-Template-Handlebars.*
-^\.gitignore
-^\.git
-^\.build
-

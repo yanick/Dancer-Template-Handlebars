@@ -1,5 +1,8 @@
 Revision history for Dancer-Template-Handlebars
 
-{{$NEXT}}
+0.1.0 2014-03-14
+ - First version, unleashed on an unsuspecting world.
 
-  - First version, unleashed on an unsuspecting world.
+ [STATISTICS]
+ - code churn: 8 files changed, 335 insertions(+), 1 deletion(-)
+

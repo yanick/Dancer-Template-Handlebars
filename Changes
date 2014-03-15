@@ -1,18 +1,11 @@
 Revision history for Dancer-Template-Handlebars
 
-{{$NEXT}}
- [API CHANGES]
-
- [BUG FIXES]
-
- [DOCUMENTATION]
-
+0.2.0 2014-03-15
  [ENHANCEMENTS]
  - Now support layouts!
 
- [NEW FEATURES]
-
  [STATISTICS]
+ - code churn: 5 files changed, 103 insertions(+), 1 deletion(-)
 
 0.1.0 2014-03-14
  - First version, unleashed on an unsuspecting world.

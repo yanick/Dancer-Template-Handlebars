@@ -15,8 +15,10 @@ lib/Dancer/Template/Handlebars/Helpers.pm
 t/00-compile.t
 t/000-report-versions-tiny.t
 t/basic.t
+t/layout.t
 t/lib/MyHelpers.pm
 t/views/hello.hbs
 t/views/helper.hbs
 t/views/helper2.hbs
+t/views/layouts/layout.hbs
 xt/release/unused-vars.t

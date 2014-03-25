@@ -4,6 +4,8 @@ Revision history for Dancer-Template-Handlebars
  [API CHANGES]
 
  [BUG FIXES]
+ - deleting the config key was causing problem when the template
+    object was re-created (GH#2, reported by mtths).
 
  [DOCUMENTATION]
 

@@ -98,42 +98,46 @@ has views_root => (
 has helpers => (
     is => 'ro',
     lazy => 1,
-    default => sub { {} },
+    builder => '_build_helpers',
 );
+
+sub _build_helpers {
+    my $self = shift;
+    
+    my %helpers;
+
+    if ( my $h = $self->config->{helpers} ) {
+        for my $module ( ref $h ? @$h : $h ) {
+            my %h = eval "use $module; %".$module.'::HANDLEBARS_HELPERS';
+
+            die "couldn't import helper functions from $module: $@" if $@;
+
+            @helpers{ keys %h } = values %h;
+        }
+    }
+
+    return \%helpers;
+}
 
 has _engine => (
     is => 'ro',
     lazy => 1,
     default => sub {
         my $self = shift;
-        
+
         return Text::Handlebars->new(
             path => [
                 $self->views_root
             ],
-            helpers => $self->helpers,
             %{ $self->config },
+            helpers => $self->helpers,
         );
     },
 );
 
-sub BUILD {
-    my $self = shift;
-    
-    if ( my $h = delete $self->config->{helpers} ) {
-        $self->gather_helpers($h);
-    }
-}
-
 sub gather_helpers {
     my( $self, $modules ) = @_;
 
-    for my $module ( ref $modules ? @$modules : $modules ) {
-        my %helpers = eval "use $module; %".$module.'::HANDLEBARS_HELPERS';
-        while( my ($k,$v) = each %helpers ) {
-            $self->helpers->{$k} = $v;
-        }
-    }
 }
 
 

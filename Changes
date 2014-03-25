@@ -1,19 +1,12 @@
 Revision history for Dancer-Template-Handlebars
 
-{{$NEXT}}
- [API CHANGES]
-
+0.2.1 2014-03-25
  [BUG FIXES]
- - deleting the config key was causing problem when the template
-    object was re-created (GH#2, reported by mtths).
-
- [DOCUMENTATION]
-
- [ENHANCEMENTS]
-
- [NEW FEATURES]
+ - deleting the config key was causing problem when the template object was
+   re-created (GH#2, reported by mtths).
 
  [STATISTICS]
+ - code churn: 2 files changed, 30 insertions(+), 18 deletions(-)
 
 0.2.0 2014-03-15
  [ENHANCEMENTS]

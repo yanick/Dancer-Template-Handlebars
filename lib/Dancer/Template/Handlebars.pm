@@ -179,11 +179,14 @@ sub view_exists {
 sub render {
     my ($self, $template, $tokens) = @_;
 
-    if ( ref $template ) {
-        return $self->_engine->render_string( $$template, $tokens );
+    my $method = 'render';
+
+    if ( ref $template ) {  # it's a ref to a string
+        $template = $$template;
+        $method .= '_string';
     }
 
-    return $self->_engine->render( $template, $tokens );
+    return $self->_engine->$method( $template, $tokens );
 
 }
 

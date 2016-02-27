@@ -83,4 +83,4 @@ without the help of C<Dancer::Template::Handlebars::Helpers>, one could do:
 
 
 
-=end
+=cut

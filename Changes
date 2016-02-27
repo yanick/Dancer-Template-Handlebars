@@ -4,6 +4,7 @@ Revision history for Dancer-Template-Handlebars
  [API CHANGES]
 
  [BUG FIXES]
+    - Fixing pod error as reported by CPANTS. (GH#3, Mohammad S Anwar)
 
  [DOCUMENTATION]
 

@@ -135,12 +135,6 @@ has _engine => (
     },
 );
 
-sub gather_helpers {
-    my( $self, $modules ) = @_;
-
-}
-
-
 sub default_tmpl_ext { "hbs" }
 
 sub view {

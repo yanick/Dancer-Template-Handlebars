@@ -1,6 +1,8 @@
 Revision history for Dancer-Template-Handlebars
 
 {{$NEXT}}
+    - Use Module::Runtime for less bare-bone namespace juggling.
+
  [API CHANGES]
 
  [BUG FIXES]

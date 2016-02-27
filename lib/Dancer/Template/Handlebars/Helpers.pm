@@ -1,22 +1,25 @@
 package Dancer::Template::Handlebars::Helpers;
 # ABSTRACT: parent class for Handlebars' helper collections
 
-
 use strict;
 use warnings;
 
 use Sub::Attribute;
 
+my %HELPERS;
+
+sub HANDLEBARS_HELPERS {
+    my $class = shift;
+    %{ $HELPERS{$class} || {} };
+}
+
 sub Helper :ATTR_SUB {
     my( $class, $sym_ref, $code_ref, $attr_name, $attr_data ) = @_;
 
-    my $fname = *{ $sym_ref }{NAME};
+    my $fname = $class . '::' . *{ $sym_ref }{NAME};
     my $helper_name = $attr_data || *{ $sym_ref }{NAME};
 
-    eval qq{
-        package $class;
-        \$${class}::HANDLEBARS_HELPERS{$helper_name} = \\\&$fname;
-    } or die $@;
+    $HELPERS{$class}{$helper_name} = \&$fname;
 }
 
 1;

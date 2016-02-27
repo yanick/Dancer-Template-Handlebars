@@ -83,8 +83,10 @@ use warnings;
 use Dancer::Config 'setting';
 
 use Text::Handlebars;
+use Module::Runtime qw/ use_module /;
 
 use Moo;
+use Try::Tiny;
 extends 'Dancer::Template::Abstract';
 
 has views_root => (
@@ -108,9 +110,12 @@ sub _build_helpers {
 
     if ( my $h = $self->config->{helpers} ) {
         for my $module ( ref $h ? @$h : $h ) {
-            my %h = eval "use $module; %".$module.'::HANDLEBARS_HELPERS';
-
-            die "couldn't import helper functions from $module: $@" if $@;
+            my %h = try {
+                use_module( $module )->HANDLEBARS_HELPERS
+            }
+            catch {
+                die "couldn't import helper functions from $module: $_";
+            };
 
             @helpers{ keys %h } = values %h;
         }

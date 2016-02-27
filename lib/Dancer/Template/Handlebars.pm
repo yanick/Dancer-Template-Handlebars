@@ -83,8 +83,10 @@ use warnings;
 use Dancer::Config 'setting';
 
 use Text::Handlebars;
+use Module::Runtime qw/ use_module /;
 
 use Moo;
+use Try::Tiny;
 extends 'Dancer::Template::Abstract';
 
 has views_root => (
@@ -108,9 +110,12 @@ sub _build_helpers {
 
     if ( my $h = $self->config->{helpers} ) {
         for my $module ( ref $h ? @$h : $h ) {
-            my %h = eval "use $module; %".$module.'::HANDLEBARS_HELPERS';
-
-            die "couldn't import helper functions from $module: $@" if $@;
+            my %h = try {
+                use_module( $module )->HANDLEBARS_HELPERS
+            }
+            catch {
+                die "couldn't import helper functions from $module: $_";
+            };
 
             @helpers{ keys %h } = values %h;
         }
@@ -134,12 +139,6 @@ has _engine => (
         );
     },
 );
-
-sub gather_helpers {
-    my( $self, $modules ) = @_;
-
-}
-
 
 sub default_tmpl_ext { "hbs" }
 
@@ -185,11 +184,14 @@ sub view_exists {
 sub render {
     my ($self, $template, $tokens) = @_;
 
-    if ( ref $template ) {
-        return $self->_engine->render_string( $$template, $tokens );
+    my $method = 'render';
+
+    if ( ref $template ) {  # it's a ref to a string
+        $template = $$template;
+        $method .= '_string';
     }
 
-    return $self->_engine->render( $template, $tokens );
+    return $self->_engine->$method( $template, $tokens );
 
 }
 

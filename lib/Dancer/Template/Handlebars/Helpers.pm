@@ -14,7 +14,7 @@ sub HANDLEBARS_HELPERS {
 }
 
 sub Helper :ATTR_SUB {
-    my( $class, $sym_ref, $code_ref, $attr_name, $attr_data ) = @_;
+    my( $class, $sym_ref, undef, undef, $attr_data ) = @_;
 
     my $fname = $class . '::' . *{ $sym_ref }{NAME};
     my $helper_name = $attr_data || *{ $sym_ref }{NAME};
